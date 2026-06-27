@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "assets:download": "node scripts/download-assets.mjs",
+    "assets:zip": "node scripts/zip-assets.mjs",
     "dev": "NODE_ENV=development node server.mjs",
     "start": "node server.mjs"
   },

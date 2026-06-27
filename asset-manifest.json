@@ -1,0 +1,10 @@
+{
+  "assets": [
+    {
+      "type": "zip",
+      "extractTo": ".",
+      "filename": "toeic-assets.zip",
+      "url": "https://drive.google.com/file/d/12eApv4rU5l9HZava-TsaByVUcCHgnS9p/view?usp=sharing"
+    }
+  ]
+}

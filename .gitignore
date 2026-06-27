@@ -1,3 +1,9 @@
 data/pdf-pages/*
 data/attempts.json
 .DS_Store
+.asset-cache/
+resources/ETS2026/READING ETS 2026 .pdf
+resources/ETS2026/LISTENING ETS 2026 .pdf
+resources/ETS2026/Transcript.pdf
+resources/ETS2026/Vocab/Vocab/*.pdf
+resources/ETS2026/Vocab/Vocab/*.pdf
