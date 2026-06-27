@@ -1,0 +1,868 @@
+{
+  "test": "ets2026-t09",
+  "directions": {
+    "part1": "For each question in this part, you will hear four statements about a picture in your test book. When you hear the statements, you must select the one statement that best describes what you see in the picture. Then find the number of the question on your answer sheet and mark your answer. The statements will not be printed in your test book and will be spoken only one time. Statement (C), “They're sitting at a table,” is the best description of the picture, so you should select answer (C) and mark it on your answer sheet. 132",
+    "part2": "You will hear a question or statement and three responses spoken in English. They will not be printed in your test book and will be spoken only one time. Select the best response to the question or statement and mark the letter (A), (B), or (C) on your answer sheet.",
+    "part3": "You will hear some conversations between two or more people. You will be asked to answer three questions about what the speakers say in each conversation. Select the best response to each question and mark the letter (A), (B), (C), or (D) on your answer sheet. The conversations will not be printed in your test book and will be spoken only one time.",
+    "part4": "You will hear some talks given by a single speaker. You will be asked to answer three questions about what the speaker says in each talk. Select the best response to each question and mark the letter (A), (B), (C), or (D) on your answer sheet. The talks will not be printed in your test book and will be spoken only one time."
+  },
+  "questions": {
+    "1": {
+      "part": 1,
+      "imagePath": "data/images/lc-test9/part1/q1.jpg"
+    },
+    "2": {
+      "part": 1,
+      "imagePath": "data/images/lc-test9/part1/q2.jpg"
+    },
+    "3": {
+      "part": 1,
+      "imagePath": "data/images/lc-test9/part1/q3.jpg"
+    },
+    "4": {
+      "part": 1,
+      "imagePath": "data/images/lc-test9/part1/q4.jpg"
+    },
+    "5": {
+      "part": 1,
+      "imagePath": "data/images/lc-test9/part1/q5.jpg"
+    },
+    "6": {
+      "part": 1,
+      "imagePath": "data/images/lc-test9/part1/q6.jpg"
+    },
+    "32": {
+      "part": 3,
+      "text": "What is the purpose of the man’s call?",
+      "choices": {
+        "A": "To question a charge on a bill",
+        "B": "To inquire about a job opening",
+        "C": "To purchase a membership",
+        "D": "To cancel a reservation"
+      },
+      "hasGraphic": false,
+      "pdfPage": 119
+    },
+    "33": {
+      "part": 3,
+      "text": "According to the woman, what additional service does the business offer?",
+      "choices": {
+        "A": "Equipment rentals",
+        "B": "Spa treatments",
+        "C": "Personalized training sessions",
+        "D": "Nutrition consultations"
+      },
+      "hasGraphic": false,
+      "pdfPage": 119
+    },
+    "34": {
+      "part": 3,
+      "text": "What does the woman ask the man to provide?",
+      "choices": {
+        "A": "Some referral letters",
+        "B": "Some contact information",
+        "C": "Acopy of a receipt",
+        "D": "A discount code"
+      },
+      "hasGraphic": false,
+      "pdfPage": 119
+    },
+    "35": {
+      "part": 3,
+      "text": "Who most likely is the man?",
+      "choices": {
+        "A": "A business client",
+        "B": "A board member",
+        "C": "A potential investor",
+        "D": "A new employee"
+      },
+      "hasGraphic": false,
+      "pdfPage": 119
+    },
+    "36": {
+      "part": 3,
+      "text": "What does the man say he learned from another factory?",
+      "choices": {
+        "A": "Assembly-line schedules",
+        "B": "Budgeting strategies",
+        "C": "Manufacturing regulations",
+        "D": "Sourcing considerations"
+      },
+      "hasGraphic": false,
+      "pdfPage": 119
+    },
+    "37": {
+      "part": 3,
+      "text": "What is done at the start of each shift?",
+      "choices": {
+        "A": "A database review",
+        "B": "Acleanliness test",
+        "C": "An attendance check",
+        "D": "A uniform inspection"
+      },
+      "hasGraphic": false,
+      "pdfPage": 119
+    },
+    "38": {
+      "part": 3,
+      "text": "According to the man, what is the human resources department concerned about?",
+      "choices": {
+        "A": "Lack of interest in a newsletter",
+        "B": "Employee compliance with a policy",
+        "C": "Ashortage of qualified applicants",
+        "D": "Inadequate training materials"
+      },
+      "hasGraphic": false,
+      "pdfPage": 119
+    },
+    "39": {
+      "part": 3,
+      "text": "Which department does the woman most likely work in?",
+      "choices": {
+        "A": "Sales",
+        "B": "Shipping",
+        "C": "Legal",
+        "D": "Graphic design"
+      },
+      "hasGraphic": false,
+      "pdfPage": 119
+    },
+    "40": {
+      "part": 3,
+      "text": "What does the man say he will do?",
+      "choices": {
+        "A": "Reassign a task",
+        "B": "Publish a news report",
+        "C": "Move a project deadline",
+        "D": "Repair a link on a Web site"
+      },
+      "hasGraphic": false,
+      "pdfPage": 119
+    },
+    "41": {
+      "part": 3,
+      "text": "What are the speakers mainly discussing?",
+      "choices": {
+        "A": "A future business trip",
+        "B": "An upcoming workshop",
+        "C": "Ajob opportunity",
+        "D": "A new employee's progress"
+      },
+      "hasGraphic": false,
+      "pdfPage": 119
+    },
+    "42": {
+      "part": 3,
+      "text": "What is the woman concerned about?",
+      "choices": {
+        "A": "Difficulty speaking in public",
+        "B": "Missing an appointment",
+        "C": "Alack of experience",
+        "D": "Anegative performance review"
+      },
+      "hasGraphic": false,
+      "pdfPage": 119
+    },
+    "43": {
+      "part": 3,
+      "text": "What does the woman say she will do?",
+      "choices": {
+        "A": "Update her résumé",
+        "B": "Speak to a colleague",
+        "C": "Review a budget",
+        "D": "Register for a training program"
+      },
+      "hasGraphic": false,
+      "pdfPage": 119
+    },
+    "44": {
+      "part": 3,
+      "text": "What have the speakers been working on?",
+      "choices": {
+        "A": "An advertising campaign",
+        "B": "A software update",
+        "C": "An office renovation",
+        "D": "A training course"
+      },
+      "hasGraphic": false,
+      "pdfPage": 120
+    },
+    "45": {
+      "part": 3,
+      "text": "Why does the woman say, “The café is just down the street”?",
+      "choices": {
+        "A": "To praise a planning decision",
+        "B": "To give directions",
+        "C": "To reject an offer",
+        "D": "To show concern about parking"
+      },
+      "hasGraphic": false,
+      "pdfPage": 120
+    },
+    "46": {
+      "part": 3,
+      "text": "What does the woman offer to show the man?",
+      "choices": {
+        "A": "A schedule",
+        "B": "A photograph",
+        "C": "Amap",
+        "D": "Amenu"
+      },
+      "hasGraphic": false,
+      "pdfPage": 120
+    },
+    "47": {
+      "part": 3,
+      "text": "Who most likely is the man?",
+      "choices": {
+        "A": "Asalesperson",
+        "B": "A journalist",
+        "C": "Acompany intern",
+        "D": "A safety inspector"
+      },
+      "hasGraphic": false,
+      "pdfPage": 120
+    },
+    "48": {
+      "part": 3,
+      "text": "What does the woman say her company’s goal is?",
+      "choices": {
+        "A": "To decrease material waste",
+        "B": "To open additional facilities",
+        "C": "To improve employee morale",
+        "D": "To acquire international contracts"
+      },
+      "hasGraphic": false,
+      "pdfPage": 120
+    },
+    "49": {
+      "part": 3,
+      "text": "What does the woman hope will happen?",
+      "choices": {
+        "A": "Some funding will become available.",
+        "B": "A fashion line will be popular.",
+        "C": "A process will be widely adopted.",
+        "D": "Export fees will be reduced."
+      },
+      "hasGraphic": false,
+      "pdfPage": 120
+    },
+    "50": {
+      "part": 3,
+      "text": "Which department are the speakers most likely hiring for?",
+      "choices": {
+        "A": "Product Development",
+        "B": "Technical Support",
+        "C": "Public Relations",
+        "D": "Graphic Design"
+      },
+      "hasGraphic": false,
+      "pdfPage": 120
+    },
+    "51": {
+      "part": 3,
+      "text": "Why is the woman unsure about a candidate?",
+      "choices": {
+        "A": "He lives too far from headquarters.",
+        "B": "He might have limited availability.",
+        "C": "He cannot provide any references.",
+        "D": "He does not have relevant experience."
+      },
+      "hasGraphic": false,
+      "pdfPage": 120
+    },
+    "52": {
+      "part": 3,
+      "text": "What does the woman suggest doing?",
+      "choices": {
+        "A": "Scheduling a press conference",
+        "B": "Canceling a training session",
+        "C": "Making a lunch reservation",
+        "D": "Postponing a phone call"
+      },
+      "hasGraphic": false,
+      "pdfPage": 120
+    },
+    "53": {
+      "part": 3,
+      "text": "What is the conversation mainly about?",
+      "choices": {
+        "A": "A holiday gathering",
+        "B": "A community festival",
+        "C": "An art gallery opening",
+        "D": "A fashion design show"
+      },
+      "hasGraphic": false,
+      "pdfPage": 120
+    },
+    "54": {
+      "part": 3,
+      "text": "Why does the woman say, “I have many options for you to consider’?",
+      "choices": {
+        "A": "To recommend budgeting carefully",
+        "B": "To offer reassurance",
+        "C": "To praise the work her team did",
+        "D": "To question a decision"
+      },
+      "hasGraphic": false,
+      "pdfPage": 120
+    },
+    "55": {
+      "part": 3,
+      "text": "What will the woman do next?",
+      "choices": {
+        "A": "Contact a colleague",
+        "B": "Drive to a bank",
+        "C": "Retrieve items from a vehicle",
+        "D": "Take the man to an event venue"
+      },
+      "hasGraphic": false,
+      "pdfPage": 120
+    },
+    "56": {
+      "part": 3,
+      "text": "What is unique about the woman’s cookbook recipes?",
+      "choices": {
+        "A": "They are inspired by the woman's university friends.",
+        "B": "They are intended for large holiday celebrations.",
+        "C": "They are collected from places the",
+        "D": "They add unusual ingredients to traditional dishes."
+      },
+      "hasGraphic": false,
+      "pdfPage": 121
+    },
+    "57": {
+      "part": 3,
+      "text": "traditional dishes. What did the woman most likely study at university?",
+      "choices": {
+        "A": "Accounting",
+        "B": "Biology",
+        "C": "History",
+        "D": "Computer science"
+      },
+      "hasGraphic": false,
+      "pdfPage": 121
+    },
+    "58": {
+      "part": 3,
+      "text": "According to the man, what will some of the readers appreciate about the recipes?",
+      "choices": {
+        "A": "They appear in multiple languages.",
+        "B": "They explain how to measure ingredients.",
+        "C": "They list alternative cooking methods.",
+        "D": "They include color photographs."
+      },
+      "hasGraphic": false,
+      "pdfPage": 121
+    },
+    "59": {
+      "part": 3,
+      "text": "Which industry do the speakers work in?",
+      "choices": {
+        "A": "Pharmaceuticals",
+        "B": "Technology",
+        "C": "Construction",
+        "D": "Agriculture"
+      },
+      "hasGraphic": false,
+      "pdfPage": 121
+    },
+    "60": {
+      "part": 3,
+      "text": "What will the men be doing?",
+      "choices": {
+        "A": "Planning a hiring process",
+        "B": "Leading a discussion",
+        "C": "Conducting a tour",
+        "D": "Inspecting a renovation project"
+      },
+      "hasGraphic": false,
+      "pdfPage": 121
+    },
+    "61": {
+      "part": 3,
+      "text": "What will the woman most likely do next?",
+      "choices": {
+        "A": "Write a review",
+        "B": "Download a mobile application",
+        "C": "Consult a manager",
+        "D": "Print some documents"
+      },
+      "hasGraphic": false,
+      "pdfPage": 121
+    },
+    "62": {
+      "part": 3,
+      "text": "Waterville Water Park Special Offers a as Aa | Day Offer Monday Free parking Tuesday Discounted menu items Wednesday | Discounted admission Thursday Free arcade tickets . What problem does the woman mention?",
+      "choices": {
+        "A": "Low attendance",
+        "B": "High maintenance costs",
+        "C": "Few trained staff",
+        "D": "Poor customer service"
+      },
+      "hasGraphic": false,
+      "pdfPage": 121
+    },
+    "63": {
+      "part": 3,
+      "text": "Look at the graphic. Which day does the woman want to change the special offer for?",
+      "choices": {
+        "A": "Monday",
+        "B": "Tuesday",
+        "C": "Wednesday",
+        "D": "Thursday"
+      },
+      "hasGraphic": true,
+      "pdfPage": 121,
+      "graphicImagePath": "data/images/lc-test9/graphics/q63.png"
+    },
+    "64": {
+      "part": 3,
+      "text": "What does the man say he wants to confirm?",
+      "choices": {
+        "A": "Some posters have been distributed.",
+        "B": "Aschedule has been printed.",
+        "C": "Some repairs have been completed.",
+        "D": "Apark map has been updated."
+      },
+      "hasGraphic": false,
+      "pdfPage": 121
+    },
+    "65": {
+      "part": 3,
+      "text": "Where most likely is the gift shop?",
+      "choices": {
+        "A": "At an airport",
+        "B": "At a sports stadium",
+        "C": "At a museum",
+        "D": "At a concert hall"
+      },
+      "hasGraphic": false,
+      "pdfPage": 122
+    },
+    "66": {
+      "part": 3,
+      "text": "Look at the graphic. How much will the woman pay for an item?",
+      "choices": {
+        "A": "$35",
+        "B": "$18",
+        "C": "$25",
+        "D": "$12"
+      },
+      "hasGraphic": true,
+      "pdfPage": 122,
+      "graphicImagePath": "data/images/lc-test9/graphics/q66.png"
+    },
+    "67": {
+      "part": 3,
+      "text": "What does the man suggest doing?",
+      "choices": {
+        "A": "Visiting a Web site",
+        "B": "Registering for a class",
+        "C": "Printing some tickets",
+        "D": "Becoming a member"
+      },
+      "hasGraphic": false,
+      "pdfPage": 122
+    },
+    "68": {
+      "part": 3,
+      "text": "Look at the graphic. Where does the woman want to install a fence?",
+      "choices": {
+        "A": "In location 1",
+        "B": "In location 2",
+        "C": "In location 3",
+        "D": "In location 4"
+      },
+      "hasGraphic": true,
+      "pdfPage": 122,
+      "graphicImagePath": "data/images/lc-test9/graphics/q68.png"
+    },
+    "69": {
+      "part": 3,
+      "text": "How can the woman receive a discount?",
+      "choices": {
+        "A": "By posting a review on social media",
+        "B": "By paying half the cost in advance",
+        "C": "By enrolling in a loyalty program",
+        "D": "By referring a friend"
+      },
+      "hasGraphic": false,
+      "pdfPage": 122
+    },
+    "70": {
+      "part": 3,
+      "text": "Why will the man visit the property on Saturday?",
+      "choices": {
+        "A": "To obtain a signature",
+        "B": "To deliver some materials",
+        "C": "To take some photographs",
+        "D": "To take some measurements"
+      },
+      "hasGraphic": false,
+      "pdfPage": 122
+    },
+    "71": {
+      "part": 4,
+      "text": "What is the focus of the tour?",
+      "choices": {
+        "A": "Rock formations",
+        "B": "Wildlife species",
+        "C": "Bridges",
+        "D": "Buildings"
+      },
+      "hasGraphic": false,
+      "pdfPage": 123
+    },
+    "72": {
+      "part": 4,
+      "text": "What does the speaker say is available on board the boat?",
+      "choices": {
+        "A": "Personalized merchandise",
+        "B": "Professional photography",
+        "C": "Meals made to order",
+        "D": "Recorded audio guides"
+      },
+      "hasGraphic": false,
+      "pdfPage": 123
+    },
+    "73": {
+      "part": 4,
+      "text": "What will the listeners most likely do next?",
+      "choices": {
+        "A": "Go to their seats",
+        "B": "Present their tickets",
+        "C": "Put on their name tags",
+        "D": "Store their belongings"
+      },
+      "hasGraphic": false,
+      "pdfPage": 123
+    },
+    "74": {
+      "part": 4,
+      "text": "According to the speaker, what is the business launching?",
+      "choices": {
+        "A": "Arewards program",
+        "B": "Arecycling program",
+        "C": "A new logo",
+        "D": "A delivery service"
+      },
+      "hasGraphic": false,
+      "pdfPage": 123
+    },
+    "75": {
+      "part": 4,
+      "text": "What should the listeners be prepared to show?",
+      "choices": {
+        "A": "Acoupon",
+        "B": "A receipt",
+        "C": "A piece of identification",
+        "D": "A signed enrollment form"
+      },
+      "hasGraphic": false,
+      "pdfPage": 123
+    },
+    "76": {
+      "part": 4,
+      "text": "Why will the business be closed tomorrow?",
+      "choices": {
+        "A": "For some floor repairs",
+        "B": "For a national holiday",
+        "C": "For a training exercise",
+        "D": "For an equipment installation"
+      },
+      "hasGraphic": false,
+      "pdfPage": 123
+    },
+    "77": {
+      "part": 4,
+      "text": "What is the speaker reporting on?",
+      "choices": {
+        "A": "Astore opening",
+        "B": "Acelebrity visit",
+        "C": "A traffic delay",
+        "D": "A sports tournament"
+      },
+      "hasGraphic": false,
+      "pdfPage": 123
+    },
+    "78": {
+      "part": 4,
+      "text": "What is causing a problem?",
+      "choices": {
+        "A": "A fallen tree",
+        "B": "Abroken piece of equipment",
+        "C": "Apermitting process",
+        "D": "A parking lot closure"
+      },
+      "hasGraphic": false,
+      "pdfPage": 123
+    },
+    "79": {
+      "part": 4,
+      "text": "Who is Mr. Wei?",
+      "choices": {
+        "A": "Alandscaper",
+        "B": "A photographer",
+        "C": "An athlete",
+        "D": "Aroad maintenance worker"
+      },
+      "hasGraphic": false,
+      "pdfPage": 123
+    },
+    "80": {
+      "part": 4,
+      "text": "Where does the speaker work?",
+      "choices": {
+        "A": "At a print shop",
+        "B": "At a social media company",
+        "C": "At an electronics store",
+        "D": "At a community center"
+      },
+      "hasGraphic": false,
+      "pdfPage": 123
+    },
+    "81": {
+      "part": 4,
+      "text": "What does the speaker imply when he says, “| was just about to post it”?",
+      "choices": {
+        "A": "He misunderstood the timeline for a task.",
+        "B": "Some technical assistance is needed.",
+        "C": "It is too late to make a change.",
+        "D": "An immediate answer is required."
+      },
+      "hasGraphic": false,
+      "pdfPage": 123
+    },
+    "82": {
+      "part": 4,
+      "text": "What does the speaker say will happen at one o'clock?",
+      "choices": {
+        "A": "A client will visit.",
+        "B": "An interview will take place.",
+        "C": "A shipment will arrive.",
+        "D": "A staff meeting will be held."
+      },
+      "hasGraphic": false,
+      "pdfPage": 123
+    },
+    "83": {
+      "part": 4,
+      "text": "What is the focus of a project?",
+      "choices": {
+        "A": "Analyzing survey results",
+        "B": "Documenting operating procedures",
+        "C": "Reducing technology expenses",
+        "D": "Recruiting qualified staff"
+      },
+      "hasGraphic": false,
+      "pdfPage": 124
+    },
+    "84": {
+      "part": 4,
+      "text": "Which industry does the speaker most likel work in?",
+      "choices": {
+        "A": "Aviation",
+        "B": "Forestry management",
+        "C": "Real estate",
+        "D": "Health care"
+      },
+      "hasGraphic": false,
+      "pdfPage": 124
+    },
+    "85": {
+      "part": 4,
+      "text": "What will the listeners see on their screens",
+      "choices": {
+        "A": "Workplace policies",
+        "B": "Budget proposals",
+        "C": "Definitions of technical terms",
+        "D": "Work assignments"
+      },
+      "hasGraphic": false,
+      "pdfPage": 124
+    },
+    "86": {
+      "part": 4,
+      "text": "What does the speaker’s company develop",
+      "choices": {
+        "A": "Recipes",
+        "B": "Medical devices",
+        "C": "Educational software",
+        "D": "Web sites"
+      },
+      "hasGraphic": false,
+      "pdfPage": 124
+    },
+    "87": {
+      "part": 4,
+      "text": "Why will the speaker meet with some of the listeners?",
+      "choices": {
+        "A": "To finalize some relocation plans",
+        "B": "To go over professional certifications",
+        "C": "To confirm project deadlines",
+        "D": "To prepare for some product demonstrations"
+      },
+      "hasGraphic": false,
+      "pdfPage": 124
+    },
+    "88": {
+      "part": 4,
+      "text": "demonstrations Why does the speaker say, “a new restaurant has opened close by”?",
+      "choices": {
+        "A": "To complain about some noise",
+        "B": "To suggest an alternative",
+        "C": "To highlight an accomplishment",
+        "D": "To clarify a misunderstanding"
+      },
+      "hasGraphic": false,
+      "pdfPage": 124
+    },
+    "89": {
+      "part": 4,
+      "text": "What kind of service is being advertised?",
+      "choices": {
+        "A": "Career training",
+        "B": "Financial planning",
+        "C": "Language translation",
+        "D": "Home inspection"
+      },
+      "hasGraphic": false,
+      "pdfPage": 124
+    },
+    "90": {
+      "part": 4,
+      "text": "According to the speaker, what is unique about the business?",
+      "choices": {
+        "A": "Its employees work remotely.",
+        "B": "Its services are free of charge.",
+        "C": "Its services are guaranteed.",
+        "D": "It operates worldwide."
+      },
+      "hasGraphic": false,
+      "pdfPage": 124
+    },
+    "91": {
+      "part": 4,
+      "text": "Why should the listeners visit a Web site?",
+      "choices": {
+        "A": "To download a brochure",
+        "B": "To complete a survey",
+        "C": "To find a nearby location",
+        "D": "To schedule an appointment"
+      },
+      "hasGraphic": false,
+      "pdfPage": 124
+    },
+    "92": {
+      "part": 4,
+      "text": "Who are the listeners?",
+      "choices": {
+        "A": "Shareholders",
+        "B": "Customers",
+        "C": "Employees",
+        "D": "Journalists"
+      },
+      "hasGraphic": false,
+      "pdfPage": 124
+    },
+    "93": {
+      "part": 4,
+      "text": "According to the speaker, what happened six months ago?",
+      "choices": {
+        "A": "A corporate office was relocated.",
+        "B": "An advertising campaign was launched.",
+        "C": "A business partnership was formed.",
+        "D": "A new executive director was hired."
+      },
+      "hasGraphic": false,
+      "pdfPage": 124
+    },
+    "94": {
+      "part": 4,
+      "text": "Why does the speaker say, “total sales revenues are still being calculated”?",
+      "choices": {
+        "A": "To express disappointment",
+        "B": "To warn against reaching a conclusion too soon",
+        "C": "To offer an excuse for missing an important deadline",
+        "D": "To suggest that a budget be revised"
+      },
+      "hasGraphic": false,
+      "pdfPage": 124
+    },
+    "95": {
+      "part": 4,
+      "text": "Who most likely is the speaker?",
+      "choices": {
+        "A": "Anews reporter",
+        "B": "A garage attendant",
+        "C": "An engineer",
+        "D": "A city official"
+      },
+      "hasGraphic": false,
+      "pdfPage": 125
+    },
+    "96": {
+      "part": 4,
+      "text": "Look at the graphic. Which parking rate has been changed?",
+      "choices": {
+        "A": "$22",
+        "B": "$24",
+        "C": "$10",
+        "D": "Free"
+      },
+      "hasGraphic": true,
+      "pdfPage": 125,
+      "graphicImagePath": "data/images/lc-test9/graphics/q96.png"
+    },
+    "97": {
+      "part": 4,
+      "text": "What will be presented next month?",
+      "choices": {
+        "A": "A marketing proposal",
+        "B": "Arevenue report",
+        "C": "Survey results",
+        "D": "Some construction plans"
+      },
+      "hasGraphic": false,
+      "pdfPage": 125
+    },
+    "98": {
+      "part": 4,
+      "text": "Look at the graphic. What is the destination of the affected flight?",
+      "choices": {
+        "A": "Austin",
+        "B": "Los Angeles",
+        "C": "Detroit",
+        "D": "New Orleans"
+      },
+      "hasGraphic": true,
+      "pdfPage": 125,
+      "graphicImagePath": "data/images/lc-test9/graphics/q98.png"
+    },
+    "99": {
+      "part": 4,
+      "text": "According to the announcement, what will Claudia provide at the counter?",
+      "choices": {
+        "A": "Seat assignments",
+        "B": "Airport maps",
+        "C": "Food vouchers",
+        "D": "Hotel recommendations"
+      },
+      "hasGraphic": false,
+      "pdfPage": 125
+    },
+    "100": {
+      "part": 4,
+      "text": "What does the speaker remind the listeners about?",
+      "choices": {
+        "A": "Complimentary Internet access",
+        "B": "Boarding procedures",
+        "C": "Automatic text notifications",
+        "D": "Luggage size restrictions"
+      },
+      "hasGraphic": false,
+      "pdfPage": 125
+    }
+  }
+}
