@@ -120,6 +120,14 @@ async function writeAttempt(attempt) {
   await fs.writeFile(attemptsFile, JSON.stringify(attempts.slice(0, 200), null, 2));
 }
 
+async function deleteAttempt(id) {
+  const attempts = await readAttempts();
+  const next = attempts.filter((attempt) => attempt.id !== id);
+  if (next.length === attempts.length) return false;
+  await fs.writeFile(attemptsFile, JSON.stringify(next, null, 2));
+  return true;
+}
+
 async function readAnswerKeys() {
   try {
     return JSON.parse(await fs.readFile(answerKeysFile, "utf8"));
@@ -262,6 +270,13 @@ const server = createServer(async (req, res) => {
       return json(res, 201, { attempt });
     }
 
+    const attemptMatch = /^\/api\/attempts\/([^/]+)$/.exec(url.pathname);
+    if (attemptMatch && req.method === "DELETE") {
+      const id = decodeURIComponent(attemptMatch[1]);
+      const deleted = await deleteAttempt(id);
+      return json(res, deleted ? 200 : 404, { deleted, id });
+    }
+
     const answerKeyMatch = /^\/api\/answer-keys\/([^/]+)$/.exec(url.pathname);
     if (answerKeyMatch && req.method === "GET") {
       const testId = decodeURIComponent(answerKeyMatch[1]);
@@ -284,6 +299,10 @@ const server = createServer(async (req, res) => {
     }
 
     if (url.pathname.startsWith("/resources/")) {
+      return serveFile(req, res, safeJoin(rootDir, url.pathname.slice(1)));
+    }
+
+    if (/^\/data\/questions-lc-test\d+\.json$/.test(url.pathname) || url.pathname.startsWith("/data/images/")) {
       return serveFile(req, res, safeJoin(rootDir, url.pathname.slice(1)));
     }
 

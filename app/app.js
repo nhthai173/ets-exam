@@ -25,6 +25,7 @@ function loadListeningDelay() {
 const state = {
   screen: "home",
   tests: [],
+  lcQuestions: {},
   attempts: [],
   answerKeys: {},
   selectedTestId: "",
@@ -62,6 +63,7 @@ const state = {
   reviewFilter: "all",
   reviewSourceQuestion: null,
   questionListOpen: false,
+  readingReviewUnlocked: false,
   strictSourceVisible: false,
   dev: false,
 };
@@ -276,8 +278,13 @@ function pdfPageImage(kind, page) {
   return `/api/pdf-page?kind=${encodeURIComponent(kind)}&page=${encodeURIComponent(page)}`;
 }
 
-function shouldShowListeningPdf(item) {
-  return state.strictSourceVisible || item.part === 1 || item.part >= 3;
+function dataAssetUrl(path) {
+  if (!path) return "";
+  return path.startsWith("/") ? path : `/${path}`;
+}
+
+function lcQuestionData(question) {
+  return state.lcQuestions[state.test?.id]?.questions?.[question] || null;
 }
 
 function previewPage(section, basePage) {
@@ -303,6 +310,12 @@ async function bootstrap() {
   state.dev = (await configResponse.json()).dev === true;
   state.tests = (await testsResponse.json()).tests;
   state.attempts = (await attemptsResponse.json()).attempts;
+  const lcQuestionEntries = await Promise.all(state.tests.map(async (test) => {
+    const response = await fetch(`/data/questions-lc-test${test.testNumber}.json`);
+    if (!response.ok) return [test.id, { questions: {} }];
+    return [test.id, await response.json()];
+  }));
+  state.lcQuestions = Object.fromEntries(lcQuestionEntries);
   state.selectedTestId = qs("test") || state.tests[0]?.id || "";
   const uniqueTestIds = [...new Set(state.attempts.slice(0, 6).map((a) => a.testId))];
   await Promise.all(uniqueTestIds.map((id) => fetchAnswerKey(id)));
@@ -474,13 +487,16 @@ function renderHome() {
         ${latest.length ? latest.map((attempt) => {
           const score = attemptScoreLabel(attempt);
           return `
-            <button class="attempt-row" data-review="${attempt.id}">
-              <div class="attempt-row-main">
-                <span>${encodeHtml(attempt.testTitle || attempt.testId)}</span>
-                <small>${new Date(attempt.submittedAt).toLocaleString("vi-VN")}</small>
-              </div>
-              <strong class="attempt-score ${score ? "" : "muted"}">${score ?? "---/990"}</strong>
-            </button>
+            <div class="attempt-row">
+              <button class="attempt-review-btn" data-review="${attempt.id}">
+                <div class="attempt-row-main">
+                  <span>${encodeHtml(attempt.testTitle || attempt.testId)}</span>
+                  <small>${new Date(attempt.submittedAt).toLocaleString("vi-VN")}</small>
+                </div>
+                <strong class="attempt-score ${score ? "" : "muted"}">${score ?? "---/990"}</strong>
+              </button>
+              <button class="attempt-delete-btn" data-delete-attempt="${attempt.id}" aria-label="Delete attempt">Delete</button>
+            </div>
           `;
         }).join("") : `<p class="muted">Chưa có lượt làm nào.</p>`}
       </aside>
@@ -507,6 +523,21 @@ function renderHome() {
       state.reviewSourceQuestion = null;
       state.screen = "review";
       render();
+    });
+  });
+  document.querySelectorAll("[data-delete-attempt]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const attempt = state.attempts.find((item) => item.id === button.dataset.deleteAttempt);
+      if (!attempt) return;
+      if (!confirm(`Xoá attempt "${attempt.testTitle || attempt.testId}"? Hành động này không thể hoàn tác.`)) return;
+      const response = await fetch(`/api/attempts/${encodeURIComponent(attempt.id)}`, { method: "DELETE" });
+      if (!response.ok) {
+        alert("Không xoá được attempt này. Hãy thử lại sau.");
+        return;
+      }
+      state.attempts = state.attempts.filter((item) => item.id !== attempt.id);
+      if (state.submittedAttempt?.id === attempt.id) state.submittedAttempt = null;
+      renderHome();
     });
   });
 }
@@ -651,6 +682,7 @@ function startExam(initialSection = "listening") {
   state.audioError = "";
   state.dialog = null;
   state.questionListOpen = false;
+  state.readingReviewUnlocked = false;
   state.pageOffsets = { listening: 0, reading: 0 };
   state.strictSourceVisible = false;
   state.screen = "exam";
@@ -671,7 +703,7 @@ function renderExam() {
         <div class="header-meta">
           <div class="answered-pill">${examAnsweredTitle()}</div>
           ${state.section === "reading" ? `<div class="timer" aria-live="polite">◷ ${formatTime(state.timerRemaining[state.section])}</div>` : ""}
-          <button class="submit-btn" id="finishBtn">Submit</button>
+          <button class="submit-btn" id="finishBtn">End practice</button>
         </div>
       </header>
 
@@ -680,7 +712,8 @@ function renderExam() {
       </main>
       ${examBottomBar()}
       ${state.questionListOpen ? questionListPanel() : ""}
-      ${state.dialog === "finish" ? finishDialog() : ""}
+      ${state.dialog === "finish-info" ? finishInfoDialog() : ""}
+      ${state.dialog === "finish-test" ? finishTestDialog() : ""}
     </div>
   `;
 
@@ -689,23 +722,13 @@ function renderExam() {
 }
 
 function listeningView(item) {
-  const isHiddenText = item.part <= 2;
-  const page = previewPage("listening", pageFor(state.test.testNumber, "listening", item.start));
   return `
     <section class="stimulus-pane">
       <div class="stimulus-card">
         <div class="stimulus-title">
           <span>${item.part === 1 ? "Select the one statement that best describes what you see in the picture." : PART_NAMES[item.part]}</span>
-          ${pageControls("listening", page)}
         </div>
-        ${shouldShowListeningPdf(item) ? `
-          <img class="pdf-page" src="${pdfPageImage("listening", page)}" alt="Listening source page ${page}">
-        ` : `
-          <div class="blank-stimulus">
-            <strong>${PART_NAMES[item.part]}</strong>
-            <span>Listen to the audio and answer the question on the right.</span>
-          </div>
-        `}
+        ${listeningStimulus(item)}
       </div>
       
       ${state.audioError ? `<div class="error-banner">${encodeHtml(state.audioError)}</div>` : ""}
@@ -714,25 +737,79 @@ function listeningView(item) {
     <section class="answer-pane">
       <h2>Question</h2>
       <div class="question-stack">
-        ${questionsFor(item).map((question) => listeningQuestion(question, isHiddenText)).join("")}
+        ${questionsFor(item).map((question) => listeningQuestion(question)).join("")}
       </div>
     </section>
   `;
 }
 
-function finishDialog() {
+function listeningStimulus(item) {
+  if (item.part === 1) {
+    const question = lcQuestionData(item.start);
+    return question?.imagePath
+      ? `<img class="part1-photo" src="${dataAssetUrl(question.imagePath)}" alt="Question ${item.start} photo">`
+      : listeningBlankStimulus(item);
+  }
+
+  if (item.part === 2) return listeningBlankStimulus(item);
+
+  const graphics = questionsFor(item)
+    .map((questionNumber) => ({ questionNumber, data: lcQuestionData(questionNumber) }))
+    .filter((question) => question.data?.graphicImagePath);
+
+  if (!graphics.length) return listeningBlankStimulus(item);
+
+  return `
+    <div class="graphic-stack">
+      ${graphics.map((question) => `
+        <img class="listening-graphic" src="${dataAssetUrl(question.data.graphicImagePath)}" alt="Graphic for question ${question.questionNumber}">
+      `).join("")}
+    </div>
+  `;
+}
+
+function listeningBlankStimulus(item) {
+  return `
+    <div class="blank-stimulus">
+      <strong>${PART_NAMES[item.part]}</strong>
+      <span>Listen to the audio and answer the question on the right.</span>
+    </div>
+  `;
+}
+
+function finishTestDialog() {
   const scope = scopeRange();
   return `
     <div class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="finishTitle">
       <section class="modal">
         <h2 id="finishTitle">Finish test?</h2>
+        <p>This will end the practice session, save your answers, and show your score before opening the review screen.</p>
         ${state.examScope === "full" ? `
           <p>Listening unanswered: <strong>${unansweredCount(1, 100)}</strong></p>
           <p>Reading unanswered: <strong>${unansweredCount(101, 200)}</strong></p>
         ` : `<p>${scope.label} unanswered: <strong>${scopeUnansweredCount()}</strong></p>`}
         <div class="modal-actions">
           <button class="ghost-btn" id="cancelFinishBtn">Cancel</button>
-          <button class="primary-btn" id="confirmFinishBtn">Submit test</button>
+          <button class="primary-btn" id="confirmFinishBtn">Show score</button>
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+function finishInfoDialog() {
+  const reviewUnlocked = state.section === "reading" && state.readingReviewUnlocked;
+  return `
+    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="finishInfoTitle">
+      <section class="modal">
+        <h2 id="finishInfoTitle">Practice control</h2>
+        <p>This button is only for this practice app. In the real TOEIC test, this navigation button is not shown.</p>
+        <p>${reviewUnlocked
+          ? "You have reached the review step, so you can use the question list to check answers before saving."
+          : "The question list stays hidden while you are taking the test. It unlocks only after you move past the final Reading question."}</p>
+        <div class="modal-actions">
+          <button class="ghost-btn" id="cancelFinishInfoBtn">Continue test</button>
+          <button class="primary-btn" id="openFinishBtn">Save options</button>
         </div>
       </section>
     </div>
@@ -743,6 +820,8 @@ function examBottomBar() {
   const item = currentItem();
   const canMove = state.section === "reading";
   const maxIndex = state.examScope === "drill" ? state.drillQuestions.length - 1 : state.test.reading.length - 1;
+  const isFinalReadingQuestion = state.section === "reading" && state.readingIndex === maxIndex;
+  const canOpenQuestionList = state.section === "reading" && (state.readingReviewUnlocked || isFinalReadingQuestion);
   return `
     <footer class="exam-bottom">
       <label class="review-check ${state.section === "reading" ? "" : "disabled"}">
@@ -751,9 +830,10 @@ function examBottomBar() {
       </label>
       <div class="bottom-actions">
         ${state.section === "listening" && state.dev ? `<button class="dev-skip-btn bottom-dev-skip" id="devSkipBtn">⏭ Skip</button>` : ""}
-        ${state.section === "reading" ? `<button class="bottom-list-btn ${state.questionListOpen ? "active" : ""}" id="questionListToggle" aria-label="Question list">☷</button>` : ""}
+        ${canOpenQuestionList ? `<button class="bottom-list-btn ${state.questionListOpen ? "active" : ""}" id="questionListToggle" aria-label="Question list">☷</button>` : ""}
         <button class="bottom-nav prev" id="bottomPrevBtn" ${canMove && state.readingIndex > 0 ? "" : "disabled"} aria-label="Previous">‹</button>
         <button class="bottom-nav next" id="bottomNextBtn" ${canMove ? "" : "disabled"} aria-label="Next">›</button>
+        ${isFinalReadingQuestion ? `<button class="bottom-finish-btn" id="bottomFinishBtn">Finish test</button>` : ""}
       </div>
     </footer>
   `;
@@ -782,12 +862,15 @@ function questionListPanel() {
 
 function listeningQuestion(question) {
   const count = partOfQuestion(question) === 2 ? 3 : 4;
+  const data = lcQuestionData(question);
+  const showText = partOfQuestion(question) >= 3;
   return `
     <article class="question-card answer-card ${state.answers[question] ? "answered" : ""}">
       <div class="question-head">
         <strong>${question}.</strong>
       </div>
-      ${choices(question, count)}
+      ${showText && data?.text ? `<p class="prompt">${encodeHtml(data.text)}</p>` : ""}
+      ${choices(question, count, showText ? data?.choices : null)}
     </article>
   `;
 }
@@ -817,13 +900,14 @@ function readingView(item) {
   `;
 }
 
-function choices(question, count = 4) {
+function choices(question, count = 4, choiceTexts = null) {
   return `
     <div class="choices" role="radiogroup" aria-label="Question ${question}">
       ${["A", "B", "C", "D"].slice(0, count).map((letter) => `
         <label class="choice ${state.answers[question] === letter ? "selected" : ""}">
           <input type="radio" name="q-${question}" value="${letter}" ${state.answers[question] === letter ? "checked" : ""}>
           <span class="choice-disc">${letter}</span>
+          ${choiceTexts?.[letter] ? `<span class="choice-text">${encodeHtml(choiceTexts[letter])}</span>` : ""}
         </label>
       `).join("")}
     </div>
@@ -858,9 +942,16 @@ function bindExamEvents() {
     });
   });
 
-  document.querySelector("#finishBtn").addEventListener("click", () => confirmFinish());
+  document.querySelector("#finishBtn").addEventListener("click", () => showFinishInfo());
   document.querySelector("#soundBtn")?.addEventListener("click", () => {
     if (state.section === "listening") playCurrentAudio();
+  });
+  document.querySelector("#cancelFinishInfoBtn")?.addEventListener("click", () => {
+    state.dialog = null;
+    renderExam();
+  });
+  document.querySelector("#openFinishBtn")?.addEventListener("click", () => {
+    confirmFinishTest();
   });
   document.querySelector("#cancelFinishBtn")?.addEventListener("click", () => {
     state.dialog = null;
@@ -892,6 +983,7 @@ function bindExamEvents() {
   });
 
   document.querySelector("#questionListToggle")?.addEventListener("click", () => {
+    if (!state.readingReviewUnlocked) return;
     state.questionListOpen = !state.questionListOpen;
     renderExam();
   });
@@ -906,6 +998,7 @@ function bindExamEvents() {
   });
   document.querySelector("#bottomPrevBtn")?.addEventListener("click", () => moveReading(-1));
   document.querySelector("#bottomNextBtn")?.addEventListener("click", () => moveReading(1));
+  document.querySelector("#bottomFinishBtn")?.addEventListener("click", () => confirmFinishTest());
 
   document.querySelector("#prevReadingBtn")?.addEventListener("click", () => moveReading(-1));
   document.querySelector("#nextReadingBtn")?.addEventListener("click", () => moveReading(1));
@@ -999,6 +1092,8 @@ function enterReading() {
   pauseAudioForAppFlow();
   if (state.transitionId) clearInterval(state.transitionId);
   state.section = "reading";
+  state.readingReviewUnlocked = false;
+  state.questionListOpen = false;
   state.questionStartedAt = Date.now();
   renderExam();
 }
@@ -1007,8 +1102,18 @@ function moveReading(delta) {
   saveQuestionTime();
   const maxIndex = state.examScope === "drill" ? state.drillQuestions.length - 1 : state.test.reading.length - 1;
   const next = Math.max(0, Math.min(maxIndex, state.readingIndex + delta));
-  if (next === state.readingIndex && delta > 0) return confirmFinish();
+  if (next === state.readingIndex && delta > 0) {
+    if (state.readingReviewUnlocked) return showFinishInfo();
+    state.readingReviewUnlocked = true;
+    state.questionListOpen = true;
+    renderExam();
+    return;
+  }
   state.readingIndex = next;
+  if (state.readingIndex === maxIndex) {
+    state.readingReviewUnlocked = true;
+    state.questionListOpen = true;
+  }
   state.questionStartedAt = Date.now();
   renderExam();
 }
@@ -1025,6 +1130,7 @@ function jumpToQuestion(question) {
     }
     return;
   }
+  if (!state.readingReviewUnlocked) return;
   const index = state.examScope === "drill"
     ? state.drillQuestions.indexOf(question)
     : state.test.reading.findIndex((item) => item.start === question);
@@ -1035,8 +1141,13 @@ function jumpToQuestion(question) {
   }
 }
 
-function confirmFinish() {
-  state.dialog = "finish";
+function showFinishInfo() {
+  state.dialog = "finish-info";
+  renderExam();
+}
+
+function confirmFinishTest() {
+  state.dialog = "finish-test";
   renderExam();
 }
 
@@ -1226,6 +1337,65 @@ function scoreBlock(summary, scope) {
     </div>`;
 }
 
+function resultScoreDetails(summary, scope) {
+  if (!summary.knownKey) {
+    return `
+      <div class="score-bands result-score-bands">
+        <div class="score-band total">
+          <strong>—<span>/990</span></strong>
+          <span>Total · no answer key</span>
+        </div>
+        <div class="score-band">
+          <strong>—<span>/495</span></strong>
+          <span>Listening score</span>
+        </div>
+        <div class="score-band">
+          <strong>—<span>/495</span></strong>
+          <span>Reading score</span>
+        </div>
+      </div>
+    `;
+  }
+
+  if (scope === "drill") {
+    const pct = Math.round((summary.correct / summary.knownKey) * 100);
+    return `
+      <div class="score-bands result-score-bands">
+        <div class="score-band total">
+          <strong>${pct}<span>%</span></strong>
+          <span>Drill score · ${summary.correct}/${summary.knownKey} correct</span>
+        </div>
+      </div>
+    `;
+  }
+
+  const hasL = summary.lKnown > 0;
+  const hasR = summary.rKnown > 0;
+  const lRaw = hasL ? (summary.lCorrect / summary.lKnown) * 100 : null;
+  const rRaw = hasR ? (summary.rCorrect / summary.rKnown) * 100 : null;
+  const lScore = lRaw !== null ? scaledScore(lRaw, "listening") : null;
+  const rScore = rRaw !== null ? scaledScore(rRaw, "reading") : null;
+  const totalScore = (lScore ?? 0) + (rScore ?? 0);
+  const partial = summary.lKnown < 100 || summary.rKnown < 100;
+
+  return `
+    <div class="score-bands result-score-bands">
+      <div class="score-band total">
+        <strong>${totalScore}<span>/990</span></strong>
+        <span>Total${partial ? " · estimated" : ""}</span>
+      </div>
+      <div class="score-band">
+        <strong>${lScore ?? "—"}<span>/495</span></strong>
+        <span>Listening · ${summary.lCorrect}/${summary.lKnown} correct</span>
+      </div>
+      <div class="score-band">
+        <strong>${rScore ?? "—"}<span>/495</span></strong>
+        <span>Reading · ${summary.rCorrect}/${summary.rKnown} correct</span>
+      </div>
+    </div>
+  `;
+}
+
 function renderResult() {
   const attempt = state.submittedAttempt;
   const key = { ...(attempt.answerKey || {}), ...cachedAnswerKey(attempt.testId) };
@@ -1239,7 +1409,7 @@ function renderResult() {
           <p>${encodeHtml(attempt.testTitle)} · ${new Date(attempt.submittedAt).toLocaleString("vi-VN")}</p>
           <div class="answered-summary">${summary.answered}/${summary.total} answered · Listening ${summary.listeningAnswered}/100 · Reading ${summary.readingAnswered}/100</div>
         </div>
-        ${scoreBlock(summary, scope)}
+        ${resultScoreDetails(summary, scope)}
       </section>
       <section class="insight-panel">
         <h2>Part performance</h2>
